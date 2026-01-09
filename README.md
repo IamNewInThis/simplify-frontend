@@ -1,16 +1,97 @@
-# React + Vite
+# Simplify Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaz de usuario para la plataforma Simplify.
 
-Currently, two official plugins are available:
+## 📋 Descripción
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Aplicación web desarrollada con React que proporciona la interfaz de usuario para la plataforma Simplify. Permite a los usuarios interactuar con el asistente de consultas, gestionar tareas de scraping y descargar resultados en formato CSV.
 
-## React Compiler
+## 🏗️ Estructura del Proyecto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+simplify-frontend/
+├── src/
+│   ├── components/         # Componentes reutilizables
+│   ├── pages/              # Páginas de la aplicación
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/
+│   │   └── api.js          # Cliente HTTP para API
+│   ├── App.jsx             # Componente principal
+│   ├── main.jsx            # Entry point
+│   └── index.css           # Estilos globales con Tailwind
+├── public/                 # Archivos estáticos
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+└── README.md               # Este archivo
+```
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19** - Librería UI
+- **Vite** - Build tool y dev server
+- **Tailwind CSS** - Framework de estilos utility-first
+- **TanStack Query** - Gestión de estado del servidor (próximamente)
+- **React Router** - Navegación (próximamente)
+
+## ⚙️ Instalación
+
+### 1. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 2. Configurar variables de entorno (opcional)
+
+Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+### 3. Ejecutar en modo desarrollo
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en: `http://localhost:5173/`
+
+## 📦 Scripts Disponibles
+
+```bash
+# Ejecutar en modo desarrollo
+npm run dev
+
+# Crear build de producción
+npm run build
+
+# Vista previa del build
+npm run preview
+
+# Ejecutar linter
+npm run lint
+```
+
+## 🚀 Build para Producción
+
+```bash
+# Generar build optimizado
+npm run build
+
+## 📝 Próximos Pasos
+
+- Implementar sistema de autenticación
+- Crear interfaz de asistente conversacional
+- Implementar dashboard de tareas de scraping
+- Añadir sistema de descarga de CSV
+- Integrar TanStack Query para gestión de estado
+- Añadir React Router para navegación
+
+## 🔗 Servicios Relacionados
+
+- [simplify-api](https://github.com/IamNewInThis/simplify-api) - Backend FastAPI
+- [simplify-scraper](https://github.com/IamNewInThis/simplify-scraper) - Motor de scraping
+- simplify-ai-service - Servicio de normalización con IA (próximamente)
+
