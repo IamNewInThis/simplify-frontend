@@ -13,12 +13,29 @@ function App() {
     setResults(null);
 
     try {
-      // Llamar al endpoint de Google Shopping (más rápido y preciso)
-      const data = await apiClient.post('/scrape/google-shopping', {
-        product_name: searchTerm
-      });
+      // Llamar al nuevo endpoint de búsqueda inteligente
+      // Este endpoint busca primero en la BD y si no hay datos, activa el scraper automáticamente
+      const data = await apiClient.get(`/products/search?q=${encodeURIComponent(searchTerm)}`);
 
-      setResults(data.results);
+      // Convertir el formato de respuesta al formato esperado por la UI
+      const formattedResults = data.products.map(product => ({
+        retailer: product.store_name || 'Desconocido',
+        nombre: data.catalog_name,
+        precio: product.price ? `$${Number(product.price.price).toLocaleString('es-CL')}` : 'No disponible',
+        sku: data.catalog_sku || '-',
+        url: product.url,
+        encontrado: product.price && product.price.in_stock,
+        store_active: product.store_active !== false  // Por defecto true si no viene
+      }));
+
+      setResults(formattedResults);
+      
+      // Mostrar mensaje si se activó el scraper
+      if (data.was_scraped) {
+        console.log('✅ Producto scrapeado y guardado en la BD');
+      } else {
+        console.log('✅ Datos cargados desde la BD');
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -53,7 +70,7 @@ function App() {
             Simplify
           </h1>
           <p className="text-xl text-gray-600">
-            Comparador de precios con Google Shopping - Múltiples retailers en segundos
+            Comparador inteligente de precios - Busca primero en BD, scrapea si es necesario
           </p>
         </div>
 
@@ -140,6 +157,11 @@ function App() {
                                   Más barato
                                 </span>
                               )}
+                              {!result.store_active && (
+                                <span className="ml-2 text-xs bg-yellow-500 text-white px-2 py-1 rounded-full" title="Tienda pendiente de validación por el administrador">
+                                  ⚠️ Pendiente
+                                </span>
+                              )}
                             </div>
                           </td>
                           <td className="py-4 px-4">
@@ -203,7 +225,7 @@ function App() {
         {/* Info adicional */}
         <div className="max-w-2xl mx-auto mt-8 text-center text-gray-600">
           <p className="text-sm">
-            Este es un ejemplo básico de scraping. El sistema busca el producto en Jumbo.cl y extrae su información.
+            🤖 Sistema de búsqueda inteligente: Primero busca en la base de datos. Si no hay datos, activa el scraper automáticamente con Google Shopping.
           </p>
         </div>
       </div>
