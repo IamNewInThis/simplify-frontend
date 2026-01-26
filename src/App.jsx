@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { apiClient } from './lib/api';
+import BrandSearch from './BrandSearch';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('product'); // 'product' or 'brand'
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
@@ -74,7 +76,37 @@ function App() {
           </p>
         </div>
 
-        {/* Card principal */}
+        {/* Tabs de navegacion */}
+        <div className="max-w-5xl mx-auto mb-6">
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setActiveTab('product')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'product'
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Buscar producto
+            </button>
+            <button
+              onClick={() => setActiveTab('brand')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'brand'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Buscar por marca
+            </button>
+          </div>
+        </div>
+
+        {/* Contenido segun tab activo */}
+        {activeTab === 'brand' ? (
+          <BrandSearch />
+        ) : (
+        /* Card principal */
         <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-8">
           <div className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-3">
@@ -221,6 +253,7 @@ function App() {
             </div>
           )}
         </div>
+        )}
 
         {/* Info adicional */}
         <div className="max-w-2xl mx-auto mt-8 text-center text-gray-600">
