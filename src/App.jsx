@@ -27,7 +27,7 @@ function App() {
         sku: data.catalog_sku || '-',
         url: product.url,
         encontrado: product.price && product.price.in_stock,
-        store_active: product.store_active !== false  // Por defecto true si no viene
+        store_active: product.store_active !== false,  // Por defecto true si no viene
       }));
 
       setResults(formattedResults);
